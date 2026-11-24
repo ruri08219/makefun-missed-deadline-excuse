@@ -15,6 +15,7 @@ EXCUSE = (
 )
 
 OUTPUT_PATH = "/output/entry.txt"
+MAX_CHARS = 200
 
 
 def main() -> None:
@@ -24,8 +25,12 @@ def main() -> None:
     with open(OUTPUT_PATH, "r", encoding="utf-8") as f:
         round_tripped = f.read()
     assert round_tripped == EXCUSE, "round-trip content mismatch"
-    assert 1 <= len(round_tripped) <= 200, "excuse must be 1-200 characters"
+    assert 1 <= len(round_tripped) <= MAX_CHARS, "excuse must be 1-200 characters"
     assert round_tripped.strip(), "excuse must not be only whitespace"
+    assert "\n" not in round_tripped, "excuse must be a single line"
+    assert round_tripped == round_tripped.strip(), (
+        "excuse must have no leading or trailing whitespace"
+    )
 
 
 if __name__ == "__main__":
